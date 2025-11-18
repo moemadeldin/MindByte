@@ -40,11 +40,11 @@ final class Course extends Model
         return $query->with(['user', 'category'])->limit(self::NUMBER_OF_COURSES_FOR_HOME_PAGE);
     }
 
-    public function scopeFilteredCourses(Builder $query, ?int $is_free, ?int $categoryId): Builder
+    public function scopeFilteredCourses(Builder $query, ?int $is_free, ?string $categorySlug): Builder
     {
         return $query->with(['category', 'user.teacher'])
             ->filterIsFree($is_free)
-            ->filterCategory($categoryId);
+            ->filterCategory($categorySlug);
     }
 
     public function getFormattedPriceAttribute(): string
@@ -76,13 +76,15 @@ final class Course extends Model
         return $query;
     }
 
-    public function scopeFilterCategory(Builder $query, ?int $categoryId): Builder
+    public function scopeFilterCategory(Builder $query, ?string $categorySlug): Builder
     {
-        if (! $categoryId) {
+        if (! $categorySlug) {
             return $query;
         }
 
-        return $query->where('category_id', $categoryId);
+        return $query->whereHas('category', function (Builder $q) use ($categorySlug): void {
+            $q->where('slug', $categorySlug);
+        });
     }
 
     public function getFormattedCreatedAtAttribute(): string

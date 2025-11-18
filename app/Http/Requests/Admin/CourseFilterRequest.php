@@ -24,7 +24,7 @@ final class CourseFilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => ['nullable', 'exists:categories,id'],
+            'slug' => ['nullable', 'exists:categories,slug'],
             'is_free' => ['nullable', 'in:0,1'],
         ];
     }
@@ -32,7 +32,7 @@ final class CourseFilterRequest extends FormRequest
     public function filters(): array
     {
         return [
-            'category_id' => $this->input('category_id'),
+            'slug' => $this->input('slug'),
             'is_free' => $this->input('is_free'),
         ];
     }

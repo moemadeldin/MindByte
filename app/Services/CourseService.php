@@ -26,11 +26,11 @@ final class CourseService implements CourseServiceInterface
             $query->courseOwner($user);
         }
 
-        $query->filteredCourses($filters['is_free'] ?? null, $filters['category_id'] ?? null);
+        $query->filteredCourses($filters['is_free'] ?? null, $filters['slug'] ?? null);
 
         $courses = $query->paginate(Pagination::COURSES_PER_PAGE->value)->withQueryString();
 
-        $categories = Category::getCategoriesById()->get();
+        $categories = Category::getCategories()->get();
 
         return [
             'courses' => $courses,

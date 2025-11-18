@@ -13,7 +13,7 @@ final class CourseController extends Controller
 {
     public function __construct(private readonly CourseServiceInterface $courseService) {}
 
-    public function index(CourseFilterRequest $request)
+    public function index(CourseFilterRequest $request): View
     {
         $data = $this->courseService->getCoursesList(null, $request->filters());
 

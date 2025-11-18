@@ -26,14 +26,13 @@
                     <div class="flex flex-col lg:flex-row gap-6 items-end">
                         <!-- Category Filter -->
                         <div class="flex-1">
-                            <label for="category_id"
-                                class="block text-sm font-medium text-gray-300 mb-2">Category</label>
+                            <label for="slug" class="block text-sm font-medium text-gray-300 mb-2">Category</label>
                             <div class="relative">
-                                <select name="category_id" id="category_id"
+                                <select name="slug" id="slug"
                                     class="w-full bg-dark-700 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none cursor-pointer">
                                     <option value="">All Categories</option>
                                     @foreach($categories as $category)
-                                        <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                                        <option value="{{ $category->slug }}" {{ request('slug') == $category->slug ? 'selected' : '' }}>
                                             {{ $category->name }}
                                         </option>
                                     @endforeach
@@ -103,7 +102,7 @@
                         <div class="flex-grow">
                             <a href="{{ route('courses.show', $course) }}">
                                 <h3 class="text-xl font-bold text-white mb-2">{{ $course->name }}</h3>
-                            </a>
+                                </a>
                             <p class="text-gray-300 mb-3">{{ Str::limit($course->description, 120) }}</p>
 
                             <div class="flex items-center text-sm text-gray-400 mb-3">
