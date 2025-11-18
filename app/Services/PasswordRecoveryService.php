@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Actions\TokenManagerAction;
 use App\DTOs\Auth\ForgotPasswordDTO;
 use App\DTOs\Auth\ResetPasswordDTO;
 use App\Events\PasswordResetTokenCreated;
@@ -16,37 +15,40 @@ use Illuminate\Support\Facades\Hash;
 
 final class PasswordRecoveryService implements PasswordRecoveryServiceInterface
 {
-    public function __construct(private readonly TokenManagerAction $tokenManagerAction) {}
-
     public function forgotPassword(ForgotPasswordDTO $dto): User
     {
         return DB::transaction(function () use ($dto): User {
 
             $user = User::getUserByEmail($dto->email)->first();
+            $code = $this->generateAndUpdateUserWithRandomVerificationCode();
+            $user->update([
+                'verification_code' => $code,
+            ]);
 
-            $token = $this->tokenManagerAction->execute($user);
-
-            event(new PasswordResetTokenCreated($user, $token));
+            event(new PasswordResetTokenCreated($user, $code));
 
             return $user;
         });
     }
 
-    public function resetPassword(ResetPasswordDTO $dto): User|bool
+    public function resetPassword(ResetPasswordDTO $dto): User
     {
-        $user = User::getUserByEmail($dto->email)->first();
+        $user = User::getUserByEmail($dto->email)
+            ->where('verification_code', $dto->verification_code)
+            ->first();
 
-        $tokenRecord = User::getTokenByEmail($dto->email)->first();
-
-        if (! Hash::check($dto->token, $tokenRecord->token)) {
-            return false;
-        }
         $user->update([
+            'verification_code' => null,
             'password' => Hash::make($dto->password),
         ]);
-        User::getTokenByEmail($dto->email)->delete();
+
         $user->notify(new PasswordChangedNotification($user));
 
         return $user;
+    }
+
+    private function generateAndUpdateUserWithRandomVerificationCode(): int
+    {
+        return random_int(User::MIN_VERIFICATION_CODE, User::MAX_VERIFICATION_CODE);
     }
 }

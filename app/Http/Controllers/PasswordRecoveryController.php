@@ -8,15 +8,16 @@ use App\DTOs\Auth\ForgotPasswordDTO;
 use App\DTOs\Auth\ResetPasswordDTO;
 use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\ResetPasswordRequest;
-use App\Services\PasswordRecoveryService;
+use App\Interfaces\PasswordRecoveryServiceInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\View\View;
 
 final class PasswordRecoveryController extends Controller
 {
     public function __construct(
-        private readonly PasswordRecoveryService $passwordRecoveryService
+        private readonly PasswordRecoveryServiceInterface $passwordRecoveryService
     ) {}
 
     public function forgotPasswordForm(): View
@@ -34,8 +35,7 @@ final class PasswordRecoveryController extends Controller
     public function resetPasswordForm(Request $request): View
     {
         return view('pages.auth.reset-password', [
-            'token' => $request->query('token'),
-            'email' => $request->query('email'),
+            'email' => Crypt::decrypt($request->query('email')),
         ]);
     }
 

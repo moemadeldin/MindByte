@@ -25,12 +25,15 @@ return new class extends Migration
                 ->index()
                 ->constrained('categories')
                 ->cascadeOnDelete();
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
             $table->string('national_id')->nullable();
             $table->boolean('is_approved')->default(false)->index();
             $table->boolean('is_active')->default(false)->index();
-            $table->date('hire_date')->index()->nullable();
+            $table->string('title')->nullable();
+            $table->decimal('avg_rating', 3, 2)->default(0)->index();
+            $table->unsignedBigInteger('reviews_count')->default(0)->index();
+            $table->unsignedBigInteger('students_count')->default(0)->index();
+            $table->unsignedInteger('courses_count')->default(0)->index();
+            $table->timestamp('stats_updated_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

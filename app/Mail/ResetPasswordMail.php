@@ -18,7 +18,7 @@ final class ResetPasswordMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public readonly User $user, public readonly string $resetToken) {}
+    public function __construct(public readonly User $user, public readonly string|int $verification_code) {}
 
     /**
      * Get the message envelope.
@@ -40,7 +40,7 @@ final class ResetPasswordMail extends Mailable
             with: [
                 'user' => $this->user,
                 'name' => $this->user->name,
-                'resetToken' => $this->resetToken,
+                'verification_code' => $this->verification_code,
             ],
         );
     }

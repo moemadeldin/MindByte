@@ -23,6 +23,6 @@ final class SendPasswordResetNotification
      */
     public function handle(PasswordResetTokenCreated $event): void
     {
-        Mail::to($event->user->email)->queue(new ResetPasswordMail($event->user, $event->resetToken));
+        Mail::to($event->user->email)->queue(new ResetPasswordMail($event->user, $event->verification_code));
     }
 }

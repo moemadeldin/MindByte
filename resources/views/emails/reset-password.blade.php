@@ -16,8 +16,11 @@
         <p class="text-gray-700 mt-2">
             You are receiving this email because we received a password reset request for your account.
         </p>
+        <p class="text-gray-700 mt-2">
+            Verification Code {{ $verification_code }}.
+        </p>
 
-        <a href="{{ route('reset-password.get', ['token' => $resetToken, 'email' => $user->email]) }}"
+        <a href="{{ url('/reset-password') }}?email={{ Illuminate\Support\Facades\Crypt::encrypt($user->email) }}"
             class="inline-block mt-6 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition">
             Reset Password
         </a>
@@ -26,7 +29,8 @@
             If the button above does not work, copy and paste the following URL into your web browser:
             <br>
             <span
-                class="break-all text-xs">{{ url('/reset-password?token=' . $resetToken . '&email=' . urlencode($user->email)) }}</span>
+                class="break-all text-xs">{{ url('/reset-password') }}?email={{ Illuminate\Support\Facades\Crypt::encrypt($user->email)}}
+            </span>
         </p>
 
         <p class="text-gray-700 mt-4">This password reset link will expire in 30 minutes.</p>

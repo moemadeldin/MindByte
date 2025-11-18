@@ -18,7 +18,7 @@ final class PasswordResetTokenCreated
     /**
      * Create a new event instance.
      */
-    public function __construct(public User $user, public string $resetToken) {}
+    public function __construct(public readonly User $user, public readonly string|int $verification_code) {}
 
     /**
      * Get the channels the event should broadcast on.

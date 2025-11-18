@@ -5,7 +5,6 @@
 
         <form action="{{ route('register.post') }}" method="POST" class="space-y-6">
             @csrf
-
             <x-input label="Name" name="name" autocomplete="name" />
             <x-input label="Email address" name="email" type="email" autocomplete="email" />
             <x-input label="Password" name="password" type="password" autocomplete="current-password" />

@@ -19,7 +19,7 @@ final class AuthService implements AuthServiceInterface
     {
         return DB::transaction(function () use ($dto): User {
             $user = User::create($dto->toArray());
-
+            $user->profile()->create();
             $roleId = Role::roleByName(Roles::USER->value)->value('id');
             $user->roles()->attach($roleId);
 

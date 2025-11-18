@@ -7,16 +7,16 @@ namespace App\DTOs\Auth;
 final readonly class ResetPasswordDTO
 {
     public function __construct(
-        public string $token,
         public string $email,
+        public string $verification_code,
         public string $password,
     ) {}
 
     public static function fromArray(array $data): self
     {
         return new self(
-            $data['token'],
             $data['email'],
+            $data['verification_code'],
             $data['password'],
         );
     }
@@ -24,8 +24,8 @@ final readonly class ResetPasswordDTO
     public function toArray(): array
     {
         return [
-            'token' => $this->token,
             'email' => $this->email,
+            'verification_code' => $this->verification_code,
             'password' => $this->password,
         ];
     }

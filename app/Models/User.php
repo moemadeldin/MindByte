@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\DB;
 
 final class User extends Authenticatable
 {
@@ -41,9 +40,9 @@ final class User extends Authenticatable
         'remember_token',
     ];
 
-    public static function getTokenByEmail(string $email): ?object
+    public function profile(): HasOne
     {
-        return DB::table('password_reset_tokens')->where('email', $email);
+        return $this->hasOne(Profile::class);
     }
 
     public function teacher(): HasOne
