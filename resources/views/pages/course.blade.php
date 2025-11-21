@@ -29,15 +29,7 @@
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             min-height: 100vh;
-        }
-
-        .course-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .course-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            color: #f1f5f9;
         }
 
         .accordion-item {
@@ -59,11 +51,33 @@
         .accordion-content.active {
             max-height: 500px;
         }
+
+        .course-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .bg-dark-800 {
+            background-color: #1e293b;
+        }
+
+        .accordion-header i {
+            transition: transform 0.3s;
+        }
+
+        .accordion-header i.rotate {
+            transform: rotate(180deg);
+        }
     </style>
 </head>
 
 <body class="antialiased text-gray-100">
     <x-home.header />
+
     <main class="py-8">
         <div class="container mx-auto px-4">
             <!-- Breadcrumb -->
@@ -96,30 +110,28 @@
 
             <div class="flex flex-col lg:flex-row gap-8">
                 <!-- Left Content -->
-                <div class="lg:w-2/3">
+                <div class="lg:w-2/3 space-y-8">
                     <!-- Category and Course Header -->
-                    <div class="mb-6">
+                    <div>
                         <span
                             class="inline-block bg-indigo-900 text-indigo-200 text-sm font-medium px-3 py-1 rounded-full mb-2">
                             {{ $course->category->name }}
                         </span>
                         <h1 class="text-3xl md:text-4xl font-bold mb-4">{{ $course->capitalized_title }}</h1>
-                        <p class="text-lg text-gray-300 mb-6">
-                            {{ $course->description}}
-                        </p>
+                        <p class="text-lg text-gray-300 mb-6">{{ $course->description }}</p>
 
                         <div class="flex flex-wrap items-center gap-4 text-sm text-gray-400">
                             <div class="flex items-center">
                                 <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                <span> (12,548 ratings)</span>
+                                <span> ({{ $course->reviews()->count() }} ratings)</span>
                             </div>
                             <div class="flex items-center">
                                 <i class="fas fa-user-graduate mr-1"></i>
-                                <span>84,295 students</span>
+                                <span>{{ $course->enrollments()->count() }} students</span>
                             </div>
                             <div class="flex items-center">
                                 <i class="fas fa-clock mr-1"></i>
-                                <span>52 total hours</span>
+                                <span>{{ $course->lessons()->count() }} lessons</span>
                             </div>
                             <div class="flex items-center">
                                 <i class="fas fa-signal mr-1"></i>
@@ -144,7 +156,7 @@
                                 class="w-16 h-16 rounded-full mr-4">
                             <div>
                                 <h3 class="font-bold text-lg">{{ $course->capitalized_instructor }}</h3>
-                                <p class="text-gray-400 mb-2">Senior Web Developer & Instructor</p>
+                                <p class="text-gray-400 mb-2">{{ $course->user->teacher->title }}</p>
                                 <div class="flex items-center text-sm text-gray-400">
                                     <i class="fas fa-star text-yellow-400 mr-1"></i>
                                     <span class="mr-4">{{ $course->user->teacher->avg_rating }} Instructor Rating</span>
@@ -163,7 +175,8 @@
 
                         <div class="mb-4 flex justify-between items-center">
                             <div>
-                                <span class="text-gray-400">12 sections • 156 lectures • 52h 15m total length</span>
+                                <span class="text-gray-400">{{ $course->sections()->count() }} Sections •
+                                    {{ $course->lessons()->count() }} lessons</span>
                             </div>
                             <button class="text-indigo-400 hover:text-indigo-300 text-sm font-medium">
                                 Expand all sections
@@ -171,124 +184,31 @@
                         </div>
 
                         <div class="accordion">
-                            <!-- Section 1 -->
-                            <div class="accordion-item">
-                                <div class="accordion-header flex justify-between items-center py-4 cursor-pointer">
-                                    <div>
-                                        <h3 class="font-semibold">Introduction to Web Development</h3>
-                                        <p class="text-sm text-gray-400 mt-1">5 lectures • 25 min</p>
+                            @foreach ($course->sections as $section)
+                                <div class="accordion-item">
+                                    <div class="accordion-header flex justify-between items-center py-4 cursor-pointer">
+                                        <div>
+                                            <h3 class="font-semibold">{{ $section->title }}</h3>
+                                            <p class="text-sm text-gray-400 mt-1">{{ $section->lessons->count() }} Lessons
+                                            </p>
+                                        </div>
+                                        <i class="fas fa-chevron-down transition-transform"></i>
                                     </div>
-                                    <i class="fas fa-chevron-down transition-transform"></i>
-                                </div>
-                                <div class="accordion-content pl-4">
-                                    <ul class="pb-4 space-y-2">
-                                        <li class="flex justify-between items-center py-2">
-                                            <div class="flex items-center">
-                                                <i class="far fa-play-circle text-gray-500 mr-3"></i>
-                                                <span>Welcome to the Course</span>
-                                            </div>
-                                            <span class="text-gray-400 text-sm">5:20</span>
-                                        </li>
-                                        <li class="flex justify-between items-center py-2">
-                                            <div class="flex items-center">
-                                                <i class="far fa-play-circle text-gray-500 mr-3"></i>
-                                                <span>What is Web Development?</span>
-                                            </div>
-                                            <span class="text-gray-400 text-sm">7:45</span>
-                                        </li>
-                                        <li class="flex justify-between items-center py-2">
-                                            <div class="flex items-center">
-                                                <i class="far fa-play-circle text-gray-500 mr-3"></i>
-                                                <span>Setting Up Your Development Environment</span>
-                                            </div>
-                                            <span class="text-gray-400 text-sm">8:30</span>
-                                        </li>
-                                        <li class="flex justify-between items-center py-2">
-                                            <div class="flex items-center">
-                                                <i class="far fa-play-circle text-gray-500 mr-3"></i>
-                                                <span>How the Internet Works</span>
-                                            </div>
-                                            <span class="text-gray-400 text-sm">10:15</span>
-                                        </li>
-                                        <li class="flex justify-between items-center py-2">
-                                            <div class="flex items-center">
-                                                <i class="far fa-file-alt text-gray-500 mr-3"></i>
-                                                <span>Course Resources</span>
-                                            </div>
-                                            <span class="text-gray-400 text-sm">Article</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Section 2 -->
-                            <div class="accordion-item">
-                                <div class="accordion-header flex justify-between items-center py-4 cursor-pointer">
-                                    <div>
-                                        <h3 class="font-semibold">HTML5 Fundamentals</h3>
-                                        <p class="text-sm text-gray-400 mt-1">12 lectures • 2h 45 min</p>
+                                    <div class="accordion-content pl-4 hidden">
+                                        <ul class="pb-4 space-y-2">
+                                            @foreach ($section->lessons as $lesson)
+                                                <li class="flex justify-between items-center py-2">
+                                                    <div class="flex items-center">
+                                                        <i class="far fa-play-circle text-gray-500 mr-3"></i>
+                                                        <span>{{ $lesson->title }}</span>
+                                                    </div>
+                                                    <span class="text-gray-400 text-sm">{{ $lesson->duration ?? 'N/A' }}</span>
+                                                </li>
+                                            @endforeach
+                                        </ul>
                                     </div>
-                                    <i class="fas fa-chevron-down transition-transform"></i>
                                 </div>
-                                <div class="accordion-content pl-4">
-                                    <ul class="pb-4 space-y-2">
-                                        <li class="flex justify-between items-center py-2">
-                                            <div class="flex items-center">
-                                                <i class="far fa-play-circle text-gray-500 mr-3"></i>
-                                                <span>HTML Document Structure</span>
-                                            </div>
-                                            <span class="text-gray-400 text-sm">15:20</span>
-                                        </li>
-                                        <li class="flex justify-between items-center py-2">
-                                            <div class="flex items-center">
-                                                <i class="far fa-play-circle text-gray-500 mr-3"></i>
-                                                <span>Text Elements and Headings</span>
-                                            </div>
-                                            <span class="text-gray-400 text-sm">18:45</span>
-                                        </li>
-                                        <li class="flex justify-between items-center py-2">
-                                            <div class="flex items-center">
-                                                <i class="far fa-play-circle text-gray-500 mr-3"></i>
-                                                <span>Lists, Links, and Images</span>
-                                            </div>
-                                            <span class="text-gray-400 text-sm">22:30</span>
-                                        </li>
-                                        <!-- More lectures would go here -->
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Section 3 -->
-                            <div class="accordion-item">
-                                <div class="accordion-header flex justify-between items-center py-4 cursor-pointer">
-                                    <div>
-                                        <h3 class="font-semibold">CSS3 and Styling</h3>
-                                        <p class="text-sm text-gray-400 mt-1">18 lectures • 4h 20 min</p>
-                                    </div>
-                                    <i class="fas fa-chevron-down transition-transform"></i>
-                                </div>
-                                <div class="accordion-content pl-4">
-                                    <ul class="pb-4 space-y-2">
-                                        <li class="flex justify-between items-center py-2">
-                                            <div class="flex items-center">
-                                                <i class="far fa-play-circle text-gray-500 mr-3"></i>
-                                                <span>Introduction to CSS</span>
-                                            </div>
-                                            <span class="text-gray-400 text-sm">12:20</span>
-                                        </li>
-                                        <li class="flex justify-between items-center py-2">
-                                            <div class="flex items-center">
-                                                <i class="far fa-play-circle text-gray-500 mr-3"></i>
-                                                <span>Selectors and Specificity</span>
-                                            </div>
-                                            <span class="text-gray-400 text-sm">20:15</span>
-                                        </li>
-                                        <!-- More lectures would go here -->
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- More sections would go here -->
+                            @endforeach
                         </div>
                     </div>
 
@@ -307,7 +227,6 @@
                 <!-- Right Sidebar - Course Card -->
                 <div class="lg:w-1/3">
                     <div class="sticky top-24 course-card bg-dark-800 rounded-xl overflow-hidden shadow-lg">
-                        <!-- Replace the gradient div with thumbnail -->
                         <div class="h-48 bg-gray-700 relative overflow-hidden">
                             @if($course->thumbnail)
                                 <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="Thumbnail"
@@ -353,16 +272,12 @@
                                 <h3 class="font-semibold text-lg mb-2">This course includes:</h3>
                                 <div class="flex items-center text-sm text-gray-300">
                                     <i class="far fa-play-circle text-gray-500 mr-3"></i>
-                                    <span>52 hours on-demand video</span>
+                                    <span>{{ $course->lessons()->count() }} lessons on-demand videos</span>
                                 </div>
-                                <div class="flex items-center text-sm text-gray-300">
+                                {{-- <div class="flex items-center text-sm text-gray-300">
                                     <i class="far fa-file-alt text-gray-500 mr-3"></i>
                                     <span>48 articles</span>
-                                </div>
-                                <div class="flex items-center text-sm text-gray-300">
-                                    <i class="fas fa-download text-gray-500 mr-3"></i>
-                                    <span>156 downloadable resources</span>
-                                </div>
+                                </div> --}}
                                 <div class="flex items-center text-sm text-gray-300">
                                     <i class="far fa-life-ring text-gray-500 mr-3"></i>
                                     <span>Full lifetime access</span>
@@ -370,28 +285,6 @@
                                 <div class="flex items-center text-sm text-gray-300">
                                     <i class="fas fa-mobile-alt text-gray-500 mr-3"></i>
                                     <span>Access on mobile and TV</span>
-                                </div>
-                                <div class="flex items-center text-sm text-gray-300">
-                                    <i class="fas fa-trophy text-gray-500 mr-3"></i>
-                                    <span>Certificate of completion</span>
-                                </div>
-                            </div>
-
-                            <div class="mt-6">
-                                <h3 class="font-semibold text-lg mb-2">Share this course</h3>
-                                <div class="flex space-x-3">
-                                    <button
-                                        class="flex-1 bg-blue-800 hover:bg-blue-700 text-white py-2 px-3 rounded text-sm">
-                                        <i class="fab fa-facebook-f mr-1"></i> Facebook
-                                    </button>
-                                    <button
-                                        class="flex-1 bg-blue-400 hover:bg-blue-500 text-white py-2 px-3 rounded text-sm">
-                                        <i class="fab fa-twitter mr-1"></i> Twitter
-                                    </button>
-                                    <button
-                                        class="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded text-sm">
-                                        <i class="fab fa-linkedin-in mr-1"></i> LinkedIn
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -416,38 +309,23 @@
                     <ul class="space-y-2">
                         <li><a href="{{ route('home') }}" class="text-slate-400 hover:text-white transition">Home</a>
                         </li>
-                        <li><a href="#" class="text-slate-400 hover:text-white transition">Courses</a></li>
-                        <li><a href="#" class="text-slate-400 hover:text-white transition">About Us</a></li>
-                        <li><a href="#" class="text-slate-400 hover:text-white transition">Contact</a></li>
+                        <li><a href="{{ route('courses.index') }}"
+                                class="text-slate-400 hover:text-white transition">Courses</a></li>
+                        <li><a href="{{ route('about') }}" class="text-slate-400 hover:text-white transition">About
+                                Us</a></li>
                     </ul>
                 </div>
 
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Categories</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-slate-400 hover:text-white transition">Programming</a></li>
-                        <li><a href="#" class="text-slate-400 hover:text-white transition">Design</a></li>
-                        <li><a href="#" class="text-slate-400 hover:text-white transition">Business</a></li>
-                        <li><a href="#" class="text-slate-400 hover:text-white transition">Photography</a></li>
+                        @foreach ($categories as $category)
+                            <li><a href="{{ route('courses.index', ['slug' => $category->slug]) }}"
+                                    class="text-slate-400 hover:text-white transition">{{ $category->name }}
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
-                </div>
-
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Connect With Us</h4>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-slate-400 hover:text-white transition">
-                            <i class="fab fa-facebook-f text-lg"></i>
-                        </a>
-                        <a href="#" class="text-slate-400 hover:text-white transition">
-                            <i class="fab fa-twitter text-lg"></i>
-                        </a>
-                        <a href="#" class="text-slate-400 hover:text-white transition">
-                            <i class="fab fa-instagram text-lg"></i>
-                        </a>
-                        <a href="#" class="text-slate-400 hover:text-white transition">
-                            <i class="fab fa-linkedin-in text-lg"></i>
-                        </a>
-                    </div>
                 </div>
             </div>
 
@@ -457,16 +335,15 @@
         </div>
     </footer>
 
+    <!-- Accordion Toggle Script -->
     <script>
-        // Accordion functionality
         document.querySelectorAll('.accordion-header').forEach(header => {
             header.addEventListener('click', () => {
                 const content = header.nextElementSibling;
                 const icon = header.querySelector('i');
 
                 content.classList.toggle('active');
-                icon.classList.toggle('fa-chevron-down');
-                icon.classList.toggle('fa-chevron-up');
+                icon.classList.toggle('rotate');
             });
         });
     </script>

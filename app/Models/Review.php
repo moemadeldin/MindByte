@@ -34,7 +34,7 @@ final class Review extends Model
     {
         return [
             'user_id' => 'integer',
-            'review' => 'text',
+            'review' => 'string',
             'rating' => 'integer',
         ];
     }

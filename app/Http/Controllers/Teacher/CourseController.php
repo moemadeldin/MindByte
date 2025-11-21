@@ -26,6 +26,20 @@ final class CourseController extends BaseCourseController
         ]);
     }
 
+    public function show(Course $course)
+    {
+        $course->load([
+            'sections' => function($query): void {
+                $query->orderBy('order')->withCount('lessons');
+            },
+            'sections.lessons' => function($query): void {
+                $query->orderBy('order')->withCount('attachments');
+            }
+        ])->loadCount(['sections', 'lessons']);
+
+        return view('dashboard.Teacher.courses.show', compact('course'));
+    }
+
     public function create(): View
     {
         $categories = Category::getCategoriesById()->get();

@@ -13,6 +13,7 @@ final class Section extends Model
 {
     use SoftDeletes;
 
+    protected $guarded = ['id'];
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);

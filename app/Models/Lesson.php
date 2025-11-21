@@ -35,7 +35,7 @@ final class Lesson extends Model
         return [
             'section_id' => 'integer',
             'title' => 'string',
-            'content' => 'text',
+            'content' => 'string',
             'order' => 'integer',
         ];
     }

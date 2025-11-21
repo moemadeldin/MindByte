@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('type')->nullable();
             $table->string('url')->nullable();
-            $table->stirng('size')->nullable();
+            $table->string('size')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

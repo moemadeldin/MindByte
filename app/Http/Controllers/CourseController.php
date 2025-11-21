@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Admin\CourseFilterRequest;
 use App\Interfaces\CourseServiceInterface;
+use App\Models\Category;
 use App\Models\Course;
 use Illuminate\View\View;
 
@@ -25,6 +26,7 @@ final class CourseController extends Controller
 
     public function show(Course $course): View
     {
-        return view('pages.course', compact('course'));
+        $categories = Category::getCategories()->get();
+        return view('pages.course', compact(['course', 'categories']));
     }
 }

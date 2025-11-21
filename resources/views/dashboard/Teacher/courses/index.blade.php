@@ -89,6 +89,10 @@
                                 <td class="px-4 py-3">{{ $course->language }}</td>
                                 <td class="px-4 py-3">
                                     <div class="flex flex-wrap gap-2 justify-center">
+                                        <a href="{{ route('dashboard.teacher.courses.show', $course) }}"
+                                            class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 text-sm">
+                                            Show
+                                        </a>
                                         <a href="{{ route('dashboard.teacher.courses.edit', $course) }}"
                                             class="px-4 py-2 text-white bg-yellow-500 rounded hover:bg-yellow-600 text-sm">
                                             Update

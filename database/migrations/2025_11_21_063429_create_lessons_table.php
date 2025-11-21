@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('section_id')
                 ->nullable()
                 ->index()
-                ->constrained('section')
+                ->constrained('sections')
                 ->cascadeOnDelete();
             $table->string('title')->nullable();
             $table->text('content')->nullable();

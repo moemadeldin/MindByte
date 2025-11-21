@@ -46,7 +46,7 @@ final class Comment extends Model
         return [
             'user_id' => 'integer',
             'parent_comment_id' => 'integer',
-            'comment' => 'text',
+            'comment' => 'string',
         ];
     }
 }
