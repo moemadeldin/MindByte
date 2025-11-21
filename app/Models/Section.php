@@ -17,10 +17,12 @@ final class Section extends Model
     {
         return $this->belongsTo(Course::class);
     }
+
     public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class)->orderBy('order');
     }
+
     protected function casts(): array
     {
         return [

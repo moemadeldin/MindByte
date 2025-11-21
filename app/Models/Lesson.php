@@ -24,6 +24,7 @@ final class Lesson extends Model
     {
         return $this->belongsTo(Section::class);
     }
+
     public function attachments(): HasMany
     {
         return $this->hasMany(LessonAttachment::class);
@@ -35,7 +36,7 @@ final class Lesson extends Model
             'section_id' => 'integer',
             'title' => 'string',
             'content' => 'text',
-            'order' => 'integer'
+            'order' => 'integer',
         ];
     }
 }
