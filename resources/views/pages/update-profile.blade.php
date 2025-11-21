@@ -89,6 +89,15 @@
                                         @error('national_id')
                                             <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                                         @enderror
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-300 mb-2">Title</label>
+                                            <input type="text" name="title"
+                                                class="w-full bg-dark-800 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                                                placeholder="Enter your Title" value="{{ auth()->user()->teacher->title }}">
+                                        </div>
+                                        @error('title')
+                                            <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
                                     @endif
 
                                     <!-- Bio Field -->

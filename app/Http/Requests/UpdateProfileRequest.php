@@ -18,6 +18,7 @@ final class UpdateProfileRequest extends FormRequest
         return [
             'email' => ['nullable', 'email', 'unique:users,email,'.auth()->id()],
             'national_id' => ['nullable', 'digits:14', 'unique:teachers,national_id,'.auth()->user()->teacher->id],
+            'title' => ['nullable', 'string'],
             'avatar' => ['nullable', 'image', 'mimes:png,jpg'],
             'bio' => ['nullable', 'string'],
         ];

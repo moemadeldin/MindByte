@@ -9,5 +9,6 @@ use Illuminate\Http\UploadedFile;
 interface ImageManagerInterface
 {
     public function upload(UploadedFile $file, string $directory, ?string $filename = null): string;
+
     public function delete(?string $path): bool;
 }

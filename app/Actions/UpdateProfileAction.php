@@ -12,6 +12,7 @@ use Illuminate\Http\UploadedFile;
 final class UpdateProfileAction
 {
     public function __construct(private readonly ImageManagerInterface $imageManager) {}
+
     public function execute(User $user, array $data, UpdateProfileDTO $dto): void
     {
         if (isset($data['email'])) {
@@ -29,10 +30,16 @@ final class UpdateProfileAction
                 'national_id' => $dto->national_id,
             ]);
         }
-        if(isset($data['avatar'])) {
+        if (isset($data['avatar'])) {
             $this->updateAvatar($user, $dto->avatar);
         }
+        if (isset($data['title'])) {
+            $user->teacher()->update([
+                'title' => $dto->title,
+            ]);
+        }
     }
+
     private function updateAvatar(User $user, UploadedFile $avatar): void
     {
         $this->imageManager->delete($user->avatar);
@@ -44,5 +51,4 @@ final class UpdateProfileAction
 
         $user->profile()->update(['avatar' => $avatarPath]);
     }
-
 }

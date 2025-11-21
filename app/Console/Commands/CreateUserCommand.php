@@ -64,6 +64,7 @@ final class CreateUserCommand extends Command
                 $newUser->teacher()->create([
                     'national_id' => $teacher['national_id'],
                     'category_id' => $teacher['category_id'],
+                    'title' => $teacher['title'],
                     'is_approved' => true,
                     'is_active' => true,
                     'hire_date' => now(),
@@ -105,6 +106,7 @@ final class CreateUserCommand extends Command
             'last_name' => $this->ask('Last name?'),
             'national_id' => $this->ask('National ID?'),
             'category_id' => $selectedCategoryId,
+            'title' => $this->ask('Title?'),
         ];
 
         return $teacher;
@@ -126,6 +128,7 @@ final class CreateUserCommand extends Command
             'last_name' => ['required', 'string'],
             'national_id' => ['required', 'digits:14'],
             'category_id' => ['required', 'integer', 'exists:categories,id'],
+            'title' => ['required', 'string'],
         ])->validate();
     }
 }

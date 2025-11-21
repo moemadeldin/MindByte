@@ -13,6 +13,7 @@ final readonly class UpdateProfileDTO
         public ?string $bio,
         public ?string $national_id,
         public ?UploadedFile $avatar,
+        public ?string $title,
     ) {}
 
     public static function fromArray(array $data): self
@@ -21,7 +22,8 @@ final readonly class UpdateProfileDTO
             $data['email'],
             $data['bio'],
             $data['national_id'],
-            array_key_exists('avatar', $data) ? $data['avatar'] : null
+            array_key_exists('avatar', $data) ? $data['avatar'] : null,
+            $data['title'],
         );
     }
 
@@ -32,6 +34,7 @@ final readonly class UpdateProfileDTO
             'bio' => $this->bio,
             'national_id' => $this->national_id,
             'avatar' => $this->avatar,
+            'title' => $this->title,
         ];
     }
 }
