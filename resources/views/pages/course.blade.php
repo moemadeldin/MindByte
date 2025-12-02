@@ -282,12 +282,6 @@
                 @auth
                     @if(auth()->id() === $review->user_id)
                         <div class="mt-4 flex justify-between items-center">
-                            <!-- Edit Button -->
-                            <a href="{{ route('reviews.edit', $course) }}"
-                               class="text-blue-500 hover:text-blue-700 transition duration-200">
-                                <i class="fas fa-edit mr-1"></i> Edit
-                            </a>
-
                             <!-- Destroy Button -->
                             <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" 
                                   onsubmit="return confirm('Are you sure you want to delete this review?');">

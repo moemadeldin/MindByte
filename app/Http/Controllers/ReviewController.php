@@ -44,38 +44,6 @@ final class ReviewController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Review $review)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Course $course, Review $review)
-    {
-
-        return view('pages.edit-review', [
-            'course' => $course,
-            'review' => $review,
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(StoreReviewRequest $request, Review $review, UpdateReviewAction $action): RedirectResponse
-    {
-        $this->authorize('update', $review);
-
-        $action->execute($request->validated(), $review);
-
-        return redirect()->back()->with('success', 'Review updated successfully');
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Review $review, DeleteReviewAction $action): RedirectResponse

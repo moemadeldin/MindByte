@@ -243,18 +243,6 @@
                                                 <i class="fas fa-eye"></i>
                                                 View Course
                                             </a>
-
-                                            {{-- Review Button --}}
-                                            @php
-                                                $hasReviewed = auth()->user()->reviews()->where('course_id', $course->id)->exists();
-                                            @endphp
-                                            @if($hasReviewed)
-                                                <a href="{{ route('reviews.edit', auth()->user()->reviews()->where('course_id', $course->id)->first()) }}"
-                                                   class="px-4 py-2 bg-dark-700 hover:bg-dark-600 text-white font-medium rounded-lg transition flex items-center justify-center gap-2 border border-dark-600">
-                                                    <i class="fas fa-star"></i>
-                                                    Edit Review
-                                                </a>
-                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -373,18 +361,6 @@
                                                 <i class="fas fa-eye"></i>
                                                 View Course
                                             </a>
-
-                                            {{-- Review Button --}}
-                                            @php
-                                                $hasReviewed = auth()->user()->reviews()->where('course_id', $course->id)->exists();
-                                            @endphp
-                                            @if($hasReviewed)
-                                                <a href="{{ route('reviews.edit', auth()->user()->reviews()->where('course_id', $course->id)->first()) }}"
-                                                   class="px-4 py-2 bg-dark-700 hover:bg-dark-600 text-white font-medium rounded-lg transition flex items-center justify-center gap-2 border border-dark-600">
-                                                    <i class="fas fa-star"></i>
-                                                    Edit Review
-                                                </a>
-                                            @endif
                                         </div>
                                     </div>
                                 </div>

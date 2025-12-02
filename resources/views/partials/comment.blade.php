@@ -56,7 +56,8 @@
         </form>
     </div>
     
-        @if ($course->teacher()->is(auth()->user()) || $course->enrollments->pluck('user_id')->contains(auth()->id()))
+        @if ($course->teacher()->is(auth()->user()) || auth()->user()?->enrolledCourses->contains($course->id))
+        {{-- @if ($course->teacher()->is(auth()->user()) || $course->enrollments->pluck('user_id')->contains(auth()->id())) --}}
             {{-- Reply Button --}}
             <button onclick="toggleReplyForm({{ $comment->id }})" 
                     class="text-sm text-indigo-400 hover:text-indigo-300 transition">

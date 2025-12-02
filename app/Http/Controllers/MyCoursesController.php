@@ -39,7 +39,9 @@ final class MyCoursesController extends Controller
             ->latest('enrollments.created_at')
             ->paginate(Pagination::DEFAULT_PER_PAGE->value);
 
-        return view('pages.my-courses', compact('enrolledCourses'));
+        return view('pages.my-courses', [
+            'enrolledCourses' => $enrolledCourses,
+        ]);
 
     }
 }

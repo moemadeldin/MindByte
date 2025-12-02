@@ -14,12 +14,6 @@ final class ReviewPolicy
     {
         return $user->enrolledCourses->contains($course) ?? false;
     }
-
-    public function update(User $user, Review $review): bool
-    {
-        return $this->hasReview($user, $review);
-    }
-
     public function delete(User $user, Review $review): bool
     {
         return $this->hasReview($user, $review);

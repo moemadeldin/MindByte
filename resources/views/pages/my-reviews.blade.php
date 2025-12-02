@@ -11,7 +11,7 @@
             {{-- Page Header --}}
             <div class="mb-10">
                 <h1 class="text-3xl md:text-4xl font-bold mb-3">My Reviews</h1>
-                <p class="text-slate-400">Manage and edit your course reviews here</p>
+                <p class="text-slate-400">Manage your course reviews here</p>
 
                 <div class="mt-6 flex items-center gap-4">
                     <a href="{{ route('home') }}" class="text-blue-400 hover:text-blue-300 flex items-center gap-2">
@@ -77,13 +77,6 @@
                                 </div>
 
                                 <div class="flex gap-3">
-                                    {{-- Edit Button --}}
-                                    <a href="{{ route('reviews.edit', $review) }}"
-                                        class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition flex items-center gap-2">
-                                        <i class="fas fa-edit"></i>
-                                        Edit
-                                    </a>
-
                                     {{-- Delete Form --}}
                                     <form action="{{ route('reviews.destroy', $review) }}" method="POST"
                                         onsubmit="return confirm('Are you sure you want to delete this review?');">

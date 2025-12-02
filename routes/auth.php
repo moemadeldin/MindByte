@@ -45,9 +45,7 @@ Route::middleware('auth')
 
         Route::controller(ReviewController::class)->group(function (): void {
             Route::get('/reviews', 'index')->name('reviews.index');
-            Route::get('/courses/{course}/reviews', 'edit')->name('reviews.edit');
             Route::post('/courses/{course}/reviews', 'store')->name('reviews.store');
-            Route::patch('/reviews/{review}', 'update')->name('reviews.update');
             Route::delete('/reviews/{review}/', 'destroy')->name('reviews.destroy');
         });
         Route::get('/my-courses', MyCoursesController::class)->name('my-courses');
