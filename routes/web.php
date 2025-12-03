@@ -14,3 +14,4 @@ foreach (['guest', 'admin', 'teacher', 'auth'] as $file) {
 Route::get('/home', HomeController::class)->name('home');
 Route::resource('/courses', CourseController::class);
 Route::get('/about-us', AboutController::class)->name('about');
+

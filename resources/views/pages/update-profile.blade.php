@@ -48,37 +48,25 @@
                                         <p class="text-red-400 text-sm mt-1 text-center">{{ $message }}</p>
                                     @enderror
                                     {{-- Name Fields --}}
-                                    <div class="grid md:grid-cols-2 gap-4">
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-300 mb-2">First
-                                                Name</label>
-                                            <input disabled readonly type="text"
-                                                class="w-full bg-dark-700 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-0 focus:border-gray-500 opacity-75"
-                                                placeholder="Enter your first name"
-                                                value="{{ auth()->user()->profile->first_name }}">
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-300 mb-2">Last
-                                                Name</label>
-                                            <input disabled readonly type="text"
-                                                class="w-full bg-dark-700 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-0 focus:border-gray-500 opacity-75"
-                                                placeholder="Enter your last name"
-                                                value="{{ auth()->user()->profile->last_name }}">
-                                        </div>
-                                    </div>
-                                    <!-- Email Field -->
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
-                                        <input type="email" name="email"
-                                            class="w-full bg-dark-800 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
-                                            placeholder="Enter your email" value="{{ auth()->user()->email }}">
-                                    </div>
-                                    @error('email')
-                                        <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
-                                    @enderror
-
-                                    <!-- National ID Field -->
                                     @if(auth()->user()->isTeacher())
+                                        <div class="grid md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-300 mb-2">First
+                                                    Name</label>
+                                                <input disabled readonly type="text"
+                                                    class="w-full bg-dark-700 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-0 focus:border-gray-500 opacity-75"
+                                                    placeholder="Enter your first name"
+                                                    value="{{ auth()->user()->profile->first_name }}">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-300 mb-2">Last
+                                                    Name</label>
+                                                <input disabled readonly type="text"
+                                                    class="w-full bg-dark-700 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-0 focus:border-gray-500 opacity-75"
+                                                    placeholder="Enter your last name"
+                                                    value="{{ auth()->user()->profile->last_name }}">
+                                            </div>
+                                        </div>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-300 mb-2">National ID</label>
                                             <input type="text" name="national_id"
@@ -99,6 +87,36 @@
                                             <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                                         @enderror
                                     @endif
+                                    @if(!auth()->user()->isTeacher())
+                                        <div class="grid md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-300 mb-2">First
+                                                    Name</label>
+                                                <input type="text" name="first_name"
+                                                    class="w-full bg-dark-700 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-0 focus:border-gray-500 opacity-75"
+                                                    placeholder="Enter your first name"
+                                                    value="{{ auth()->user()->profile->first_name }}">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-300 mb-2">Last
+                                                    Name</label>
+                                                <input type="text" name="last_name"
+                                                    class="w-full bg-dark-700 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-0 focus:border-gray-500 opacity-75"
+                                                    placeholder="Enter your last name"
+                                                    value="{{ auth()->user()->profile->last_name }}">
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <!-- Email Field -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                                        <input type="email" name="email"
+                                            class="w-full bg-dark-800 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                                            placeholder="Enter your email" value="{{ auth()->user()->email }}">
+                                    </div>
+                                    @error('email')
+                                        <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
 
                                     <!-- Bio Field -->
                                     <div>

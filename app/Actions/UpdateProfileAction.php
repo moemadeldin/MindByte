@@ -15,6 +15,17 @@ final class UpdateProfileAction
 
     public function execute(User $user, array $data, UpdateProfileDTO $dto): void
     {
+
+        if (isset($data['first_name'])) {
+            $user->profile()->update([
+                'first_name' => $dto->first_name,
+            ]);
+        }
+        if (isset($data['last_name'])) {
+            $user->profile()->update([
+                'last_name' => $dto->last_name,
+            ]);
+        }
         if (isset($data['email'])) {
             $user->update([
                 'email' => $dto->email,

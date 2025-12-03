@@ -43,6 +43,7 @@ final class AuthController extends Controller
         $dto = LoginDTO::fromArray($request->validated());
         try {
             $user = $this->authService->login($dto);
+            // dd($user);
             if ($user->isActive()) {
                 Auth::login($user);
 

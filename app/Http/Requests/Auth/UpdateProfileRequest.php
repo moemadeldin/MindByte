@@ -16,8 +16,10 @@ final class UpdateProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'first_name' => ['nullable', 'string' ,'regex:/^[\\p{L} ,.\'-]+$/u'],
+            'last_name' => ['nullable', 'string', 'regex:/^[\\p{L} ,.\'-]+$/u'],
             'email' => ['nullable', 'email', 'unique:users,email,'.auth()->id()],
-            'national_id' => ['nullable', 'digits:14', 'unique:teachers,national_id,'.auth()->user()->teacher->id],
+            'national_id' => ['nullable', 'digits:14', 'unique:teachers,national_id,'.auth()->user()?->teacher?->id],
             'title' => ['nullable', 'string'],
             'avatar' => ['nullable', 'image', 'mimes:png,jpg'],
             'bio' => ['nullable', 'string'],
