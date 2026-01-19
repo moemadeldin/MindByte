@@ -12,6 +12,7 @@ use App\Http\Requests\Auth\StoreUserRequest;
 use App\Interfaces\AuthServiceInterface;
 use Exception;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -29,6 +30,7 @@ final class AuthController extends Controller
         $user = $this->authService->register(RegisterDTO::fromArray($request->validated()));
 
         Auth::login($user);
+        $request->session()->regenerate();
 
         return redirect()->route('home')->with('success', 'registered, logged in successfully');
     }
@@ -40,26 +42,27 @@ final class AuthController extends Controller
 
     public function login(LoginRequest $request): RedirectResponse
     {
-        $dto = LoginDTO::fromArray($request->validated());
         try {
-            $user = $this->authService->login($dto);
-            // dd($user);
-            if ($user->isActive()) {
-                Auth::login($user);
+            $user = $this->authService->login(LoginDTO::fromArray($request->validated()));
+            Auth::login($user);
+            $request->session()->regenerate();
 
-                return redirect()->route('home')->with('success', 'logged in successfully');
-            }
+            return redirect()->route('home')->with('success', 'logged in successfully');
 
-            return redirect()->route('login')->with('error', 'Login failed');
-        } catch (Exception $e) {
-            return redirect()->route('login')->with('error', $e->getMessage());
+        } catch (\Throwable $e) {
+            report($e);
+
+            return back()
+                ->withInput($request->only('email'))
+                ->with('error', 'Invalid credentials');
         }
     }
 
-    public function logout(): RedirectResponse
+    public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
-
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect()->route('login')->with('success', 'logged out successfully');
     }
 }

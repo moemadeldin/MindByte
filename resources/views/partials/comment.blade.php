@@ -1,8 +1,8 @@
 <div class="bg-dark-700 rounded-lg p-4 mb-4">
     <div class="flex justify-between items-start mb-2">
         <div class="flex items-center">
-            <img src="{{ asset('storage/' . $comment->user->profile->avatar) }}" 
-                 class="w-8 h-8 rounded-full mr-3">
+            {{-- <img src="{{ asset('storage/' . $comment->user->profile->avatar) }}" 
+                 class="w-8 h-8 rounded-full mr-3"> --}}
             <span class="font-semibold">{{ $comment->user->name }}</span>
         </div>
         <div class="flex items-center space-x-2">

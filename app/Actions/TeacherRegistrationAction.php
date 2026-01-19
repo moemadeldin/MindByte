@@ -15,15 +15,12 @@ final class TeacherRegistrationAction
     public function execute(TeacherRegistrationDTO $dto): User
     {
         return DB::transaction(function () use ($dto): User {
-            $user = User::create($dto->toArray());
-            $user->teacher()->create($dto->toArray());
+            $user = User::create($dto->toUserArray());
+            $user->teacher()->create($dto->toTeacherArray());
 
             $roleId = Role::roleByName(Roles::TEACHER->value)->value('id');
             $user->roles()->attach($roleId);
-            $user->profile()->create([
-                'first_name' => $dto->first_name,
-                'last_name' => $dto->last_name,
-            ]);
+            $user->profile()->create($dto->toProfileArray());
 
             return $user;
         });

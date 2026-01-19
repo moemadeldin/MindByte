@@ -10,6 +10,7 @@ use App\Enums\Roles;
 use App\Interfaces\AuthServiceInterface;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -27,15 +28,15 @@ final class AuthService implements AuthServiceInterface
         });
     }
 
-    public function login(LoginDTO $dto): User|bool
+    public function login(LoginDTO $dto): User
     {
         $user = User::getUserByEmail($dto->email)->first();
 
-        if (! Hash::check($dto->password, $user->password)) {
-            return false;
+        if (! $user || ! Hash::check($dto->password, $user->password)) {
+            throw new AuthenticationException('Invalid Credentials');
         }
         if (! $user->isActive()) {
-            return false;
+            throw new AuthenticationException('User is blocked');
         }
 
         return $user;

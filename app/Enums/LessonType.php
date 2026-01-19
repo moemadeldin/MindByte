@@ -11,6 +11,7 @@ enum LessonType: string
     case IMAGE = 'image';
     case AUDIO = 'audio';
     case DOCUMENT = 'document';
+    case PPT = 'ppt';
 
     public function label(): string
     {
@@ -20,6 +21,7 @@ enum LessonType: string
             self::IMAGE => 'Image',
             self::AUDIO => 'Audio',
             self::DOCUMENT => 'Document',
+            self::PPT => 'Ppt',
         };
     }
 }

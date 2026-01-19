@@ -10,7 +10,7 @@
     'levelColorTo',
     'rating',
     'instructorName',
-    'instructorImage',
+    // 'instructorImage',
     'price',
     'badgeText' => null,
     'badgeColor' => 'bg-yellow-400',
@@ -58,10 +58,10 @@
         </div>
 
         <div class="flex justify-between items-center border-t border-slate-600 pt-4">
-            <div class="flex items-center">
+            {{-- <div class="flex items-center">
                 <img src="{{ $instructorImage }}" alt="Instructor" class="w-8 h-8 rounded-full mr-2">
                 <span class="text-slate-300 text-sm">{{ $instructorName }}</span>
-            </div>
+            </div> --}}
             <span class="text-green-400 font-bold text-lg">{{ $price }}</span>
         </div>
     </div>

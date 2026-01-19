@@ -21,8 +21,8 @@ final readonly class UpdateProfileDTO
     public static function fromArray(array $data): self
     {
         return new self(
-            $data['first_name'],
-            $data['last_name'],
+            $data['first_name'] ?? null,
+            $data['last_name'] ?? null,
             $data['email'],
             $data['bio'],
             $data['national_id'] ?? null,

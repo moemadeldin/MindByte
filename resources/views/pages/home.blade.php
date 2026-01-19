@@ -42,7 +42,7 @@
                             lessons="{{ $course->lessons_count }}" levelText="{{ $course->level->label() }}"
                             levelColorFrom="blue-900" levelColorTo="blue-200" rating=""
                             instructorName="{{ $course->capitalized_instructor}}"
-                            instructorImage="{{ asset('storage/' . $course->teacher->profile->avatar) }}"
+                            {{-- instructorImage="{{ asset('storage/' . $course->teacher->profile->avatar) }}" --}}
                             price="{{ $course->formatted_price }}" courseUrl="{{ route('courses.show', $course) }}" />
                     @endforeach
                 </section>

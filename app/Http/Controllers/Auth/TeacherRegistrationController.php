@@ -27,6 +27,7 @@ final class TeacherRegistrationController extends Controller
     {
         $user = $this->teacherRegistrationAction->execute(TeacherRegistrationDTO::fromArray($request->validated()));
         Auth::login($user);
+        $request->session()->regenerate();
 
         return redirect()->route('home')->with('success', 'registered, logged in successfully');
     }

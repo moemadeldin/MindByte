@@ -79,9 +79,6 @@
 
 <body class="antialiased text-gray-100">
     <x-home.header />
-{{-- @php
-    dd(auth()->user()->enrolledCourses->contains($course));
-@endphp --}}
     <main class="py-8">
         <div class="container mx-auto px-4">
             <!-- Breadcrumb -->

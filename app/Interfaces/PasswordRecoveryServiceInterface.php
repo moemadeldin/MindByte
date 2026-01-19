@@ -10,7 +10,7 @@ use App\Models\User;
 
 interface PasswordRecoveryServiceInterface
 {
-    public function forgotPassword(ForgotPasswordDTO $dto): User;
+    public function forgotPassword(ForgotPasswordDTO $dto): void;
 
     public function resetPassword(ResetPasswordDTO $dto): User;
 }

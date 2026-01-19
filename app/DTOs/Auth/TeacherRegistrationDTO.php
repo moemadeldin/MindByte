@@ -32,17 +32,29 @@ final readonly class TeacherRegistrationDTO
         );
     }
 
-    public function toArray(): array
+    public function toUserArray(): array
     {
         return [
             'name' => $this->name,
             'email' => $this->email,
             'password' => $this->password,
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
+        ];
+    }
+
+    public function toTeacherArray(): array
+    {
+        return [
             'national_id' => $this->national_id,
             'category_id' => $this->category_id,
             'title' => $this->title,
+        ];
+    }
+
+    public function toProfileArray(): array
+    {
+        return [
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
         ];
     }
 }

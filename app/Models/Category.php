@@ -6,13 +6,14 @@ namespace App\Models;
 
 use App\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Category extends Model
 {
-    use Sluggable, SoftDeletes;
+    use HasFactory, Sluggable, SoftDeletes;
 
     protected $guarded = ['id'];
 

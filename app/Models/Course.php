@@ -9,6 +9,7 @@ use App\Enums\LessonType;
 use App\Traits\Sluggable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -19,7 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Course extends Model
 {
-    use Sluggable, SoftDeletes;
+    use HasFactory, Sluggable, SoftDeletes;
 
     private const NUMBER_OF_COURSES_FOR_HOME_PAGE = 3;
 
@@ -109,10 +110,10 @@ final class Course extends Model
         return ucwords($this->name);
     }
 
-    public function getCapitalizedInstructorAttribute(): string
-    {
-        return ucwords($this->teacher->profile->full_name);
-    }
+    // public function getCapitalizedInstructorAttribute(): string
+    // {
+    //     return ucwords($this->teacher->profile->full_name);
+    // }
 
     public function sections(): HasMany
     {
