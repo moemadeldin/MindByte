@@ -1,0 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Requests\Auth;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+final class UpdateProfileRequest extends FormRequest
+{
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'first_name' => ['nullable', 'string', 'regex:/^[\\p{L} ,.\'-]+$/u'],
+            'last_name' => ['nullable', 'string', 'regex:/^[\\p{L} ,.\'-]+$/u'],
+            'email' => ['nullable', 'email', 'unique:users,email,'.auth()->id()],
+            'national_id' => ['nullable', 'digits:14', 'unique:teachers,national_id,'.auth()->user()?->teacher?->id],
+            'title' => ['nullable', 'string'],
+            'avatar' => ['nullable', 'image', 'mimes:png,jpg'],
+            'bio' => ['nullable', 'string'],
+        ];
+    }
+}

@@ -1,0 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Route;
+
+foreach (['guest', 'admin', 'teacher', 'auth'] as $file) {
+    require __DIR__."/{$file}.php";
+}
+
+Route::get('/', HomeController::class)->name('home');
+Route::resource('/courses', CourseController::class);
+Route::get('/about-us', AboutController::class)->name('about');
