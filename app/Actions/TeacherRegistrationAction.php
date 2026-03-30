@@ -8,7 +8,7 @@ use App\DTOs\Auth\TeacherRegistrationDTO;
 use App\Enums\Roles;
 use App\Models\Role;
 use App\Models\User;
-use App\Services\BillingSyncService; // Import your service
+use App\Services\BillingSyncService;
 use Illuminate\Support\Facades\DB;
 
 final class TeacherRegistrationAction
@@ -20,7 +20,6 @@ final class TeacherRegistrationAction
     public function execute(TeacherRegistrationDTO $dto): User
     {
         \Log::info("Action: Starting registration for " . $dto->email);
-        // 1. Save everything to your local database first
         $user = DB::transaction(function () use ($dto): User {
             $user = User::create($dto->toUserArray());
             $user->teacher()->create($dto->toTeacherArray());
@@ -32,8 +31,7 @@ final class TeacherRegistrationAction
             return $user;
         });
         \Log::info("Action: Transaction complete. Calling Sync Service.");
-        // 2. Now that the transaction is finished and the user is 100% saved,
-        // sync them to SyncInvoice.
+
         $this->billingSyncService->provisionTeacher($user, $dto->password);
 
         return $user;

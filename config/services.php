@@ -37,11 +37,11 @@ return [
         ],
     ],
     'stripe' => [
-        'sk' => env('STRIPE_SK'),
-        'pk' => env('STRIPE_PK'),
+        'sk' => env('STRIPE_KEY'),
+        'pk' => env('STRIPE_SECRET'),
     ],
     'sync_invoice' => [
         'url'   => env('SYNC_INVOICE_URL'),
-        'token' => env('INTERNAL_SYNC_TOKEN'),
+        'token' => env('SYNC_INVOICE_TOKEN'),
     ],
 ];

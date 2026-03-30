@@ -21,7 +21,7 @@ final class StripeController extends Controller
 {
     public function __construct(private readonly BillingSyncService $billingService)
     {
-        Stripe::setApiKey(config('services.stripe.sk'));
+        Stripe::setApiKey(config('services.stripe.pk'));
     }
 
     /**
